@@ -3,16 +3,18 @@ This is a demo application demonstrating how I would construct a simple web appl
 
 For the back-end, I've chosen the following technologies:
 
+First and foremost, I'm using ASP.NET Core 2.0.
+
 The WebAPI is built in F# with Giraffe.
 - I chose these technologies as F# lends itself quite nicely to stateless API endpoint development.
-- Giraffe is a nice fit as well, as it allows me to create idiomatic F# code while still leveraging the power of ASP.NET Core.
+- [Giraffe](https://github.com/dustinmoris/Giraffe) is a nice fit as well, as it allows me to create idiomatic F# code while still leveraging the power of ASP.NET Core.
 
 The Logic layer is also built in F#.
 - F# is an obvious choice for implementation of logic; functional languages make this a breeze.
-- I also use Fable to transpile some of this logic into javascript, for use in the front-end.
+- I also use [Fable](http://fable.io/) to transpile some of this logic into javascript, for use in the front-end.
 
 The DTO layer is built in C#.
-- I chose C# so that I could use Typewriter, which allows me to easily generate TypeScript class definitions from C# code.
+- I chose C# so that I could use [Typewriter](https://frhagn.github.io/Typewriter/), which allows me to easily generate TypeScript class definitions from C# code.
 - This will ensure that the front-end TypeScript is kept in sync with the back-end data returned by the APIs.
 The Data Layer is built in C#, with Entity Framework Core.
 - Despite the fact that EF introduces a runtime overhead and many layers of abstractions, I feel it's suitable for a small application where development speed is the primary concern.
@@ -29,9 +31,9 @@ Vanilla CSS
 ReactJS for the SPA framework.
 - Functional components allow me to keep a coding style that is consistent with my functional-first back-end.
 
-React.Semantic-UI for the component framework.
+[React.Semantic-UI](https://react.semantic-ui.com/introduction) for the component framework.
 - Normally, I would actually choose to write my components by hand, as it allows greater control over the output CSS.  This is particularly true if I'm working with a design team that has specific UI requirements.
 
-redux, react-router, and react-router-redux for state management.
+[redux](https://github.com/reactjs/react-redux), [react-router](https://github.com/ReactTraining/react-router), and [react-router-redux](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-redux) for state management.
 - This application isn't going to be very complex, but redux offers a nice abstraction over your application's state.  Using redux, it will enable me to forego having to write very many stateful components.
 - react-router and react-router-redux will ensure that the application state is persisted in the URL to support native forward/backward navigation in the browser.
