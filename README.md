@@ -14,9 +14,10 @@ The Logic layer is also built in F#.
 The DTO layer is built in C#.
 - I chose C# so that I could use [Typewriter](https://frhagn.github.io/Typewriter/), which allows me to easily generate TypeScript class definitions from C# code.
 - This will ensure that the front-end TypeScript is kept in sync with the back-end data returned by the APIs.
+
 The Data Layer is built in C#, with Entity Framework Core.
 - Despite the fact that EF introduces a runtime overhead and many layers of abstractions, I feel it's suitable for a small application where development speed is the primary concern.
-- In larger applications, or in apps where performance is a greater concern, I would instead opt to use hand-written T-SQL and Dapper.
+- In apps where performance is a greater concern, I would instead opt to use hand-written T-SQL and Dapper.
 
 For the front-end, I've chosen the following technologies:
     
