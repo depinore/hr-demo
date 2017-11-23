@@ -28,6 +28,7 @@ Vanilla CSS
 
 ReactJS for the SPA framework.
 - Functional components allow me to keep a coding style that is consistent with my functional-first back-end.
+
 React.Semantic-UI for the component framework.
     Normally, I would actually choose to write my components by hand, as it allows greater control over the output CSS.  This is particularly true if I'm working with a design team that has specific UI requirements.
 
