@@ -30,7 +30,7 @@ ReactJS for the SPA framework.
 - Functional components allow me to keep a coding style that is consistent with my functional-first back-end.
 
 React.Semantic-UI for the component framework.
-    Normally, I would actually choose to write my components by hand, as it allows greater control over the output CSS.  This is particularly true if I'm working with a design team that has specific UI requirements.
+- Normally, I would actually choose to write my components by hand, as it allows greater control over the output CSS.  This is particularly true if I'm working with a design team that has specific UI requirements.
 
 redux, react-router, and react-router-redux for state management.
 - This application isn't going to be very complex, but redux offers a nice abstraction over your application's state.  Using redux, it will enable me to forego having to write very many stateful components.
