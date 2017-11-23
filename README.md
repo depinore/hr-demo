@@ -3,10 +3,8 @@ This is a demo application demonstrating how I would construct a simple web appl
 
 For the back-end, I've chosen the following technologies:
 
-First and foremost, I'm using ASP.NET Core 2.0.
-
-The WebAPI is built in F# with Giraffe.
-- I chose these technologies as F# lends itself quite nicely to stateless API endpoint development.
+The API uses ASP.NET Core 2.0 built in F# with Giraffe.
+- I chose F# because lends itself quite nicely to stateless API endpoint development.
 - [Giraffe](https://github.com/dustinmoris/Giraffe) is a nice fit as well, as it allows me to create idiomatic F# code while still leveraging the power of ASP.NET Core.
 
 The Logic layer is also built in F#.
