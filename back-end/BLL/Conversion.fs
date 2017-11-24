@@ -6,12 +6,14 @@ module Conversion =
 
     let toDetails (e: Entities.Employee) =
         let result = DTO.Results.EmployeeDetails()
+        result.Id <- e.Id
         result.FirstName <- e.FirstName
         result.LastName <- e.LastName
         result.Dependents <- e.Dependents |> List.ofSeq |> List.map toPerson
         result
     let toSummary (e: Entities.Employee) =
         let result = DTO.Results.EmployeeSummary()
+        result.Id <- e.Id
         result.FirstName <- e.FirstName
         result.LastName <- e.LastName
         result.NumDependents <- e.Dependents.Count

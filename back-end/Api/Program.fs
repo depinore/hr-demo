@@ -17,15 +17,18 @@ open Microsoft.EntityFrameworkCore
 open Microsoft.Extensions.Configuration
 
 // ---------------------------------
-// Web app
+// Web app  
 // ---------------------------------
 
 let webApp =
     choose [
-        route "/" >=> text "Hello world!"
-        route "/summary" >=>
+        route "/" >=> 
             choose [
-                GET >=> Handlers.fetchAll]
+                GET >=> Handlers.fetchAll
+                POST >=> Handlers.create
+                DELETE >=> Handlers.delete
+            ]
+        routeBind<DTO.Queries.FindEmployee> "/{Id}" Handlers.fetchSingle
         setStatusCode 404 >=> text "Not Found" ]
 
 // ---------------------------------

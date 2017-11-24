@@ -6,6 +6,7 @@ namespace DTO.Results
 {
     public class EmployeeDetails : Person
     {
+        public int Id { get; set; }
         public IEnumerable<Person> Dependents { get; set; }
     }
 }

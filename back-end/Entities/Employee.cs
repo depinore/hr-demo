@@ -5,6 +5,6 @@ namespace Entities
 {
     public class Employee : Person
     {
-        public virtual IList<Person> Dependents { get; set; }
+        public IList<Person> Dependents { get; set; }
     }
 }

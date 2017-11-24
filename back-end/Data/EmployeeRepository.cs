@@ -52,14 +52,21 @@ namespace Data
 
         public async Task<EmployeeDetails> Find(FindEmployee query)
         {
-            var e = await db.Employees.FindAsync(query.Id);
+            var e = await db.Employees
+                            .Include(emp => emp.Dependents)
+                            .FirstOrDefaultAsync(emp => emp.Id == query.Id);
+                            
             return e == null ? null : BLL.Conversion.toDetails(e);
         }
 
-        public async Task<IEnumerable<EmployeeSummary>> GetAll() =>
-            (await db.Employees
-            .ToListAsync())
-            .Select(BLL.Conversion.toSummary)
-            .ToList();
+        public async Task<IEnumerable<EmployeeSummary>> GetAll() {
+            var results = (await db.Employees
+                            .Include(e => e.Dependents)
+                            .ToListAsync())
+                            .Select(BLL.Conversion.toSummary)
+                            .ToList();
+            return results;
+        }
+            
     }
 }

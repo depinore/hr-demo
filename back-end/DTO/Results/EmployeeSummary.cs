@@ -6,6 +6,7 @@ namespace DTO.Results
 {
     public class EmployeeSummary : Person
     {
+        public int Id { get; set; }
         public int NumDependents { get; set; }
     }
 }
