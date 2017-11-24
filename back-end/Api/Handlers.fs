@@ -3,6 +3,7 @@ module Handlers
     open Microsoft.AspNetCore.Http
     open Microsoft.Extensions.Configuration
 
-    let fetchAll (getConfig: unit -> IConfigurationRoot) (next:HttpFunc) (ctx: HttpContext) =
-        let c = getConfig()
-        (c.["ConnectionStrings:db"] |> text) next ctx
+    let fetchAll (next:HttpFunc) (ctx: HttpContext) =
+        let configuration = ctx.RequestServices.GetService(typedefof<IConfigurationRoot>) 
+                                :?> IConfigurationRoot
+        (configuration.["ConnectionStrings:db"] |> text) next ctx

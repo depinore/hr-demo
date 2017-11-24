@@ -20,15 +20,12 @@ open Microsoft.Extensions.Configuration
 // Web app
 // ---------------------------------
 
-let mutable Configuration: IConfigurationRoot = null
-
-let getConfig = fun () -> Configuration
 let webApp =
     choose [
         route "/" >=> text "Hello world!"
         route "/summary" >=>
             choose [
-                GET >=> Handlers.fetchAll getConfig]
+                GET >=> Handlers.fetchAll]
         setStatusCode 404 >=> text "Not Found" ]
 
 // ---------------------------------
@@ -51,12 +48,13 @@ let configureApp (app : IApplicationBuilder) =
        .UseGiraffeErrorHandler(errorHandler)
        .UseGiraffe(webApp)
 
-let configureServices (services : IServiceCollection) =
+let configureServices (config: IConfigurationRoot) (services : IServiceCollection)  =
     [
         services.AddDbContext<Data.EmployeeContext>(fun options ->
-            options.UseSqlServer(Configuration.GetConnectionString("db")) |> ignore);
+            options.UseSqlServer(config.GetConnectionString("db")) |> ignore);
         services.AddCors();
-        services.AddScoped<Data.IEmployeeRepository, Data.EmployeeRepository>()
+        services.AddScoped<Data.IEmployeeRepository, Data.EmployeeRepository>();
+        services.AddSingleton<IConfigurationRoot>(config)
     ] |> ignore
 
 let configureLogging (builder : ILoggingBuilder) =
@@ -67,13 +65,7 @@ let configureLogging (builder : ILoggingBuilder) =
 let main argv =
     let contentRoot = Directory.GetCurrentDirectory()
     let webRoot     = Path.Combine(contentRoot, "WebRoot")
-    let configuration = ConfigurationBuilder()
-
-    configuration
-        .AddJsonFile(contentRoot + "\\appsettings.json", false, true)
-        .AddEnvironmentVariables() |> ignore
-
-    Configuration <- configuration.Build()
+    let config = AppConfiguration.ConfigurationHelpers.GetConfiguration()
 
     WebHostBuilder()
         .UseKestrel()
@@ -81,7 +73,7 @@ let main argv =
         .UseIISIntegration()
         .UseWebRoot(webRoot)
         .Configure(Action<IApplicationBuilder> configureApp)
-        .ConfigureServices(configureServices)
+        .ConfigureServices(configureServices config)
         .ConfigureLogging(configureLogging)
         .Build()
         .Run()

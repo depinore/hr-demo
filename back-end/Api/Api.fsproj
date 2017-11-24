@@ -50,6 +50,7 @@
     <ProjectReference Include="..\BLL\BLL.fsproj" />
     <ProjectReference Include="..\Data\Data.csproj" />
     <ProjectReference Include="..\DTO\DTO.csproj" />
+    <ProjectReference Include="..\AppConfiguration\AppConfiguration.csproj" />
   </ItemGroup>
 
 </Project>
