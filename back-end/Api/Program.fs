@@ -11,20 +11,24 @@ open Microsoft.Extensions.Logging
 open Microsoft.Extensions.DependencyInjection
 open Giraffe.HttpHandlers
 open Giraffe.Middleware
-open Giraffe.Razor.HttpHandlers
-open Giraffe.Razor.Middleware
 open Api.Models
+open Microsoft.Extensions.Options
+open Microsoft.EntityFrameworkCore
+open Microsoft.Extensions.Configuration
+
 
 // ---------------------------------
 // Web app
 // ---------------------------------
 
+let mutable Configuration: IConfigurationRoot = null
+
 let webApp =
     choose [
-        GET >=> route "/" >=> razorHtmlView "Index" { Text = "Hello world, from Giraffe!" }
-        POST >=> route "/" >=> text "you posted"
-        setStatusCode 404 >=> text "Not Found" 
-    ]
+        route "/" >=>
+            choose [
+                GET >=> (fun next ctx -> (Configuration.["ConnectionStrings:db"] |> text) next ctx)]
+        setStatusCode 404 >=> text "Not Found" ]
 
 // ---------------------------------
 // Error handler
@@ -44,15 +48,15 @@ let configureCors (builder : CorsPolicyBuilder) =
 let configureApp (app : IApplicationBuilder) =
     app.UseCors(configureCors)
        .UseGiraffeErrorHandler(errorHandler)
-       .UseStaticFiles()
        .UseGiraffe(webApp)
 
 let configureServices (services : IServiceCollection) =
-    let sp  = services.BuildServiceProvider()
-    let env = sp.GetService<IHostingEnvironment>()
-    let viewsFolderPath = Path.Combine(env.ContentRootPath, "Views")
-    services.AddRazorEngine viewsFolderPath |> ignore
-    services.AddCors() |> ignore
+    [
+        services.AddDbContext<Data.EmployeeContext>(fun options ->
+            options.UseSqlServer(Configuration.GetConnectionString("db")) |> ignore);
+        services.AddCors();
+        services.AddScoped<Data.IEmployeeRepository, Data.EmployeeRepository>()
+    ] |> ignore
 
 let configureLogging (builder : ILoggingBuilder) =
     let filter (l : LogLevel) = l.Equals LogLevel.Error
@@ -62,6 +66,14 @@ let configureLogging (builder : ILoggingBuilder) =
 let main argv =
     let contentRoot = Directory.GetCurrentDirectory()
     let webRoot     = Path.Combine(contentRoot, "WebRoot")
+    let configuration = ConfigurationBuilder()
+
+    configuration
+        .AddJsonFile(contentRoot + "\\appsettings.json", false, true)
+        .AddEnvironmentVariables() |> ignore
+
+    Configuration <- configuration.Build()
+
     WebHostBuilder()
         .UseKestrel()
         .UseContentRoot(contentRoot)
