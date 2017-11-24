@@ -16,18 +16,19 @@ open Microsoft.Extensions.Options
 open Microsoft.EntityFrameworkCore
 open Microsoft.Extensions.Configuration
 
-
 // ---------------------------------
 // Web app
 // ---------------------------------
 
 let mutable Configuration: IConfigurationRoot = null
 
+let getConfig = fun () -> Configuration
 let webApp =
     choose [
-        route "/" >=>
+        route "/" >=> text "Hello world!"
+        route "/summary" >=>
             choose [
-                GET >=> (fun next ctx -> (Configuration.["ConnectionStrings:db"] |> text) next ctx)]
+                GET >=> Handlers.fetchAll getConfig]
         setStatusCode 404 >=> text "Not Found" ]
 
 // ---------------------------------
