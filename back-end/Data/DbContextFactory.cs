@@ -8,9 +8,9 @@ namespace Data {
     {
         public EmployeeContext CreateDbContext(string[] args)
         {
-            var config = ConfigurationHelpers.GetConfiguration();
+            var config = ConfigurationHelpers.GetConfiguration("..\\Api\\appsettings.json");
             var builder = new DbContextOptionsBuilder<EmployeeContext>();
-            builder.UseSqlServer(config.GetConnectionString("db"));
+            builder.UseSqlServer(ConfigurationHelpers.GetDbConnectionString(config));
 
             return new EmployeeContext(builder.Options);
         }

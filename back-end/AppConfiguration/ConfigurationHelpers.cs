@@ -6,15 +6,16 @@ namespace AppConfiguration
 {
     public static class ConfigurationHelpers
     {
-        public static IConfigurationRoot GetConfiguration() 
+        public static IConfigurationRoot GetConfiguration(string contentRoot) 
         {
-            var contentRoot = Directory.GetCurrentDirectory() + "\\..\\Api";
-
             return (new ConfigurationBuilder())
                     .SetBasePath(contentRoot)
                     .AddJsonFile(contentRoot + "\\appsettings.json", true, true)
                     .AddEnvironmentVariables()
                     .Build();
+        }
+        public static string GetDbConnectionString(IConfigurationRoot config) {
+            return config["hr_demo_db"];
         }
     }
 }

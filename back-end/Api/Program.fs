@@ -54,7 +54,7 @@ let configureApp (app : IApplicationBuilder) =
 let configureServices (config: IConfigurationRoot) (services : IServiceCollection)  =
     [
         services.AddDbContext<Data.EmployeeContext>(fun options ->
-            options.UseSqlServer(config.GetConnectionString("db")) |> ignore);
+            options.UseSqlServer(AppConfiguration.ConfigurationHelpers.GetDbConnectionString(config)) |> ignore);
         services.AddCors();
         services.AddScoped<Data.IEmployeeRepository, Data.EmployeeRepository>();
         services.AddSingleton<IConfigurationRoot>(config)
@@ -68,7 +68,7 @@ let configureLogging (builder : ILoggingBuilder) =
 let main argv =
     let contentRoot = Directory.GetCurrentDirectory()
     let webRoot     = Path.Combine(contentRoot, "WebRoot")
-    let config = AppConfiguration.ConfigurationHelpers.GetConfiguration()
+    let config = AppConfiguration.ConfigurationHelpers.GetConfiguration(contentRoot)
 
     WebHostBuilder()
         .UseKestrel()
