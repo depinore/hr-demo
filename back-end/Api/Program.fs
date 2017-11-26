@@ -74,7 +74,6 @@ let main argv =
         .UseKestrel()
         .UseContentRoot(contentRoot)
         .UseIISIntegration()
-        .UseWebRoot(webRoot)
         .Configure(Action<IApplicationBuilder> configureApp)
         .ConfigureServices(configureServices config)
         .ConfigureLogging(configureLogging)
