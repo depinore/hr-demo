@@ -1,11 +1,8 @@
-import { Guy } from '../shared/types'
-
-export type SummaryState = {
-    guys: Guy[]
+export type State = {
+    employees: DTO.Results.EmployeeSummary[]
 }
 
 export const enum Events {
-    Select,
-    StartNew,
-    Delete
+    NewStarted,
+    Deleted,
 }
