@@ -7,7 +7,6 @@ module Handlers
     let getService (ctx: HttpContext) =
         ctx.RequestServices.GetService(typedefof<Data.IEmployeeRepository>) 
                     :?> Data.IEmployeeRepository
-
     let fetchAll (next:HttpFunc) (ctx: HttpContext) =
         task {
             let svc = getService ctx

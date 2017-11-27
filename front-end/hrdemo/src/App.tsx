@@ -1,7 +1,20 @@
 import * as React from 'react';
 import './App.css';
 
+//types
+import { Guy } from './shared/types'
+
+//components
+import * as summaryTemplates from './summary/templates'
+//import * as detailsTemplates from './details/templates'
+
 const logo = require('./logo.svg');
+
+const dummyData: Guy[] = [
+  { firstName: 'edgar', lastName: 'martinez' },
+  { firstName: 'john', lastName: 'doe' },
+  { firstName: 'jane', lastName: 'doe' }
+]
 
 class App extends React.Component {
   render() {
@@ -12,7 +25,7 @@ class App extends React.Component {
           <h2>Welcome to React</h2>
         </div>
         <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
+          <summaryTemplates.Summary guys={dummyData} />
         </p>
       </div>
     );
