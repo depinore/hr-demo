@@ -1,1 +1,6 @@
-export type Eventual<T> = 'isLoading' | T
+export type Action = {
+    type: string
+}
+export type Reducer<TAction extends Action> = {
+    (currentState: any, action: TAction): any
+}

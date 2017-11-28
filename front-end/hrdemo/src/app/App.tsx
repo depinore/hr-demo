@@ -10,28 +10,32 @@ const logo = require('./logo.svg');
 
 export const dummyData = []
 
-function renderSummary(state: types.AppState) {
-  return state.summary !== 'isLoading'
-    ? <summaryTemplates.Summary employees={state.summary.employees} />
-    : <p>Loading...</p>
+function renderSummary(state: types.States.Summary) {
+  return state.app_summaryLoading
+    ? <p>Loading...</p>
+    : <summaryTemplates.Summary summary_employees={state.summary_employees} />
 }
-function renderDetails(state: types.AppState) {
-  return state.details !== 'isLoading' && typeof state.details !== 'undefined'
-    ? <detailsTemplates.Details formData={state.details.formData} id={state.details.id} />
-    : <p>Loading...</p>
+function renderDetails(state: types.States.Details) {
+  // return state.details_formData !== 'isLoading' && typeof state.details_formData !== 'undefined'
+  //   ? <detailsTemplates.Details details_formData={state} />
+  //   : <p>Loading...</p>
+  return <detailsTemplates.Details details_formData={state.details_formData} />
 }
 
-function generateBody(state: types.AppState) {
-  switch(state.currentView) {
-    case 'details': return renderDetails(state)
-    case 'summary': return renderSummary(state)
+function generateBody(state: types.States.Any) {
+  switch(state.app_currentView) {
+    case 'details': return renderDetails(state as types.States.Details)
+    case 'summary': return renderSummary(state as types.States.Summary)
+    default:
+      throw 'Unexpected view detected'
   }
 }
 
 class App extends React.Component {
-  state: types.AppState = {
-    currentView: 'summary',
-    summary: 'isLoading',
+  state: types.States.Any = {
+    app_currentView: 'summary',
+    app_summaryLoading: true,
+    summary_employees: []
   }
   private store = redux.createStore((() => null), this.state)
 

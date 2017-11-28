@@ -22,13 +22,13 @@ open Microsoft.Extensions.Configuration
 
 let webApp =
     choose [
-        route "/" >=> 
+        route "/api" >=> 
             choose [
                 GET >=> Handlers.fetchAll
                 POST >=> Handlers.create
                 DELETE >=> Handlers.delete
             ]
-        routeBind<DTO.Queries.FindEmployee> "/{Id}" Handlers.fetchSingle
+        routeBind<DTO.Queries.FindEmployee> "/api/{Id}" Handlers.fetchSingle
         setStatusCode 404 >=> text "Not Found" ]
 
 // ---------------------------------
