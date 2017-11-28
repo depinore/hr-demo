@@ -79,6 +79,7 @@ export function _reduce(s: types.State, a: types.Actions.Any): types.State {
         case 'details_dependentFieldUpdated':
             return updateDependentField(s, a)
         case 'details_entered':
+            return initializeFormData(s)
         case 'details_saved':
         case 'details_cancelled':
         default: 
