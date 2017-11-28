@@ -40,13 +40,10 @@ namespace Data
 
         public async Task Delete(DeleteEmployee command)
         {
-            var deleted = new Entities.Employee
-            {
-                Id = command.Id
-            };
-            db.Employees.Attach(deleted);
-            db.Employees.Remove(deleted);
-
+            var deleted = await db.Employees
+                                .Include(e => e.Dependents)
+                                .FirstAsync(e => e.Id == command.Id);
+            db.Remove(deleted);
             await db.SaveChangesAsync();
         }
 

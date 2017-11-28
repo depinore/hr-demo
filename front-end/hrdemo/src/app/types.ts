@@ -22,13 +22,13 @@ export namespace Actions {
     export interface Base extends sharedTypes.Action {
         type: events,
     }
-    export interface BeginLoading extends Base {
+    export interface BeganLoading extends Base {
         type: 'app_beganLoading',
     }
-    export interface FinishLoading extends Base {
+    export interface FinishedLoading extends Base {
         type: 'app_loaded'
         employees: DTO.Results.EmployeeSummary[]
     }
 
-    export type Any = BeginLoading | FinishLoading
+    export type Any = BeganLoading | FinishedLoading
 }

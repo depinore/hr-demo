@@ -22,13 +22,13 @@ open Microsoft.Extensions.Configuration
 
 let webApp =
     choose [
-        route "/api" >=> 
+        route "/employees" >=> 
             choose [
                 GET >=> Handlers.fetchAll
                 POST >=> Handlers.create
-                DELETE >=> Handlers.delete
             ]
-        routeBind<DTO.Queries.FindEmployee> "/api/{Id}" Handlers.fetchSingle
+        GET >=> routeBind<DTO.Queries.FindEmployee> "/employees/{Id}" Handlers.fetchSingle
+        DELETE >=> routeBind<DTO.Commands.DeleteEmployee> "/employees/{Id}" Handlers.delete
         setStatusCode 404 >=> text "Not Found" ]
 
 // ---------------------------------
@@ -44,7 +44,7 @@ let errorHandler (ex : Exception) (logger : ILogger) =
 // ---------------------------------
 
 let configureCors (builder : CorsPolicyBuilder) =
-    builder.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader() |> ignore
+    builder.WithOrigins("http://localhost:3000").AllowAnyMethod().AllowAnyHeader() |> ignore
 
 let configureApp (app : IApplicationBuilder) =
     app.UseCors(configureCors)

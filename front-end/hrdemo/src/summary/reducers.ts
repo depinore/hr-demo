@@ -4,7 +4,7 @@ import * as types from './types'
 
 const childReducers: sharedTypes.Reducer<any>[] = []
 
-export function deleteEmployee(s: types.State, a: types.Actions.Delete): types.State {
+export function deleteEmployee(s: types.State, a: types.Actions.Deleted): types.State {
     return {
         ...s,
         summary_employees: s.summary_employees.filter(e => e.id !== a.id)

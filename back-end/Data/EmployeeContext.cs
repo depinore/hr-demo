@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Data
 {
@@ -15,6 +16,9 @@ namespace Data
 
             personEntity.Property(p => p.FirstName).IsRequired();
             personEntity.Property(p => p.LastName).IsRequired();
+            
+            modelBuilder.Entity<Entities.Employee>()
+                .HasMany(e => e.Dependents);
         }
     }
 }

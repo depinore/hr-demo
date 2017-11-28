@@ -27,10 +27,9 @@ module Handlers
             let! result = svc.Add(cmd)
             return! json result next ctx
         }
-    let delete (next: HttpFunc) (ctx: HttpContext) =
+    let delete (cmd: DTO.Commands.DeleteEmployee) (next: HttpFunc) (ctx: HttpContext) =
         task {
             let svc = getService ctx
-            let! cmd = ctx.BindJson<DTO.Commands.DeleteEmployee>()
             do! svc.Delete(cmd)
             return! setStatusCode 200 next ctx
         }    

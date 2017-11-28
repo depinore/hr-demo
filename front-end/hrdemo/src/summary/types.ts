@@ -13,13 +13,21 @@ export namespace Actions {
     export interface Base extends sharedTypes.Action {
         type: events
     }
-    export interface StartNew extends Base {
+    export interface StartedNew extends Base {
         type: 'summary_newStarted'
     }
-    export interface Delete extends Base {
+    export interface Deleted extends Base {
         type: 'summary_deleted',
         id: number
     }
+    export interface Navigated extends Base {
+        type: 'summary_entered'
+    }
 
-    export type Any = StartNew | Delete
+    export type Any = StartedNew | Deleted | Navigated
+}
+
+export type SideEffects = {
+    summary_onCreate: Function,
+    summary_onRemove: (id: Actions.Deleted) => void
 }

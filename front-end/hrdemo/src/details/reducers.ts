@@ -7,6 +7,7 @@ const childReducers: sharedTypes.Reducer<any>[] = []
 export function initializeFormData(s: types.State): types.State {
     return {
         ...s,
+        details_formDisabled: false,
         details_formData: {
             employee: {
                 firstName: '',
@@ -17,16 +18,31 @@ export function initializeFormData(s: types.State): types.State {
     }
 }
 
-export function updateEmployeeField(s: types.State, a: types.Actions.UpdateEmployeeField): types.State {
+export function updateEmployeeField(s: types.State, a: types.Actions.UpdatedEmployeeField): types.State {
     return {
         ...s,
         details_formData: {
             ...s.details_formData,
-            [a.prop]: a.val
+            employee: {
+                ...s.details_formData.employee,
+                [a.prop]: a.val
+            }
         }
     }
 }
-export function updateDependentField(s: types.State, a: types.Actions.UpdateDependentField): types.State {
+export function submissionBegin(s: types.State) {
+    return {
+        ...s,
+        details_formDisabled: true
+    }
+}
+export function submissionFinish(s: types.State) {
+    return {
+        ...s,
+        details_formDisabled: false
+    }
+}
+export function updateDependentField(s: types.State, a: types.Actions.UpdatedDependentField): types.State {
     const bookEnds = getBookends(s.details_formData.dependents, a.index)
 
     return {
@@ -57,7 +73,7 @@ export function addDependent(s: types.State): types.State {
         }
     }
 }
-export function removeDependent(s: types.State, a: types.Actions.RemoveDependent): types.State {
+export function removeDependent(s: types.State, a: types.Actions.RemovedDependent): types.State {
     const bookends = getBookends(s.details_formData.dependents, a.index)
     return {
         ...s,
@@ -80,9 +96,13 @@ export function _reduce(s: types.State, a: types.Actions.Any): types.State {
             return updateDependentField(s, a)
         case 'details_entered':
             return initializeFormData(s)
+        case 'details_formSaveBegin':
+            return submissionBegin(s);
+        case 'details_formSaveFinish':
+            return submissionFinish(s);
         case 'details_saved':
         case 'details_cancelled':
-        default: 
+        default:  
             return s;
     }
 }
