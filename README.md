@@ -93,4 +93,4 @@ Note: this application has been tested on both Windows Server 2016 and Windows 1
 1. On the Summary page, you should see a summary of all employees in the system, with their total calculated cost based on what you input for them.
 1. Clicking on Delete will delete that employee from the system.
 
-Enjoy!
+Thanks for reading!
