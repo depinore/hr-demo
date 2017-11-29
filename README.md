@@ -59,7 +59,7 @@ Note: this application has been tested on both Windows Server 2016 and Windows 1
 1. Install the latest [.NET Core](https://www.microsoft.com/net/learn/get-started).
 1. Install the latest [nodeJS](https://nodejs.org).
 1. Install [create-react-app](https://github.com/facebookincubator/create-react-app) globally.
-1. Make sure you have an instance of SQL Server, SQL Server Express, or localdb available somewhere on your network.
+1. Make sure you have an instance of SQL Server, SQL Server Express, or localdb available to the machine that will run this code.
 1. Open the command prompt.
 1. Navigate to the root of this repo.
 1. Navigate to `back-end`.
