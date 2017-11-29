@@ -1,7 +1,7 @@
 import * as sharedTypes from '../shared/types'
 
 export type State = {
-    summary_employees: DTO.Results.EmployeeSummary[]
+    summary_employees: DTO.Results.EmployeeDetails[]
 }
 
 export type events = 

@@ -30,9 +30,5 @@ declare namespace DTO {
             id: number
             dependents: Person[]
         }
-        export interface EmployeeSummary extends Person {
-            id: number
-            numDependents: number
-        }
     }
 }

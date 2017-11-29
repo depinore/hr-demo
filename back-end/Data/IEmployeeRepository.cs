@@ -15,7 +15,7 @@ namespace Data
         //for simplicity, I will not be supporting UPDATE commands upon employees.
 
         //queries
-        Task<IEnumerable<DTO.Results.EmployeeSummary>> GetAll();
+        Task<IEnumerable<DTO.Results.EmployeeDetails>> GetAll();
         Task<DTO.Results.EmployeeDetails> Find(DTO.Queries.FindEmployee query);
     }
 }

@@ -4,9 +4,11 @@ export async function saveForm(dispatch: Function, cmd: types.Actions.FormSaved)
     dispatch(<types.Actions.Simple>{
         type: 'details_formSaveBegin'
     })
+
     const submission = await fetch(new Request('http://localhost:5000/employees', {
-        body: cmd.info,
-        method: 'POST'
+        body: JSON.stringify(cmd.info),
+        method: 'POST',
+        mode: 'cors'
     }))
     const results: types.Actions.FormSubmissionFinished = {
         type: 'details_formSaveFinish',

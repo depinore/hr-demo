@@ -27,8 +27,8 @@ export namespace Actions {
     }
     export interface FinishedLoading extends Base {
         type: 'app_loaded'
-        employees: DTO.Results.EmployeeSummary[]
+        employees: DTO.Results.EmployeeDetails[]
     }
 
-    export type Any = BeganLoading | FinishedLoading
+    export type Any = BeganLoading | FinishedLoading 
 }

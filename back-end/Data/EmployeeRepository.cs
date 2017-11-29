@@ -56,11 +56,11 @@ namespace Data
             return e == null ? null : BLL.Conversion.toDetails(e);
         }
 
-        public async Task<IEnumerable<EmployeeSummary>> GetAll() {
+        public async Task<IEnumerable<EmployeeDetails>> GetAll() {
             var results = (await db.Employees
                             .Include(e => e.Dependents)
                             .ToListAsync())
-                            .Select(BLL.Conversion.toSummary)
+                            .Select(BLL.Conversion.toDetails)
                             .ToList();
             return results;
         }

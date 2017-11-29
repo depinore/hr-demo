@@ -1,0 +1,1 @@
+export const preDeductionSalary = 26 * 2000

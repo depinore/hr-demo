@@ -28,18 +28,26 @@ export function generateSummarySideEffects(dispatch: (x: any) => void): summaryT
 }
 export function generateDetailsSideEffects(dispatch: (x: any) => void): detailsTypes.SideEffects {
     return {
-        details_onCancel: () => dispatch(<detailsTypes.Actions.Simple>{
-            type: 'details_cancelled'
-        }),
+        details_onCancel: () => {
+            dispatch(<detailsTypes.Actions.Simple>{
+                type: 'details_cancelled'
+            })
+            dispatch(<summaryTypes.Actions.Navigated>{
+                type: 'summary_entered'
+            })   
+        },
         details_onDependentAdd: () => dispatch(<detailsTypes.Actions.Simple>{
             type: 'details_dependentAdded'
         }),
         details_onSave: async function(action: detailsTypes.Actions.FormSaved) {
             const results = await detailsActions.saveForm(dispatch, action)
-            if(results.successful)
-                dispatch(<detailsTypes.Actions.Navigated>{
-                    type: 'details_entered'
+            if(results.successful) {
+                await getEmployees(dispatch)
+                dispatch(<summaryTypes.Actions.Navigated>{
+                    type: 'summary_entered'
                 })
+            }
+                
         },
         details_onDependentRemove: dispatch,
         details_onDependentUpdate: dispatch,

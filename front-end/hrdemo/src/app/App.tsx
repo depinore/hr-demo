@@ -11,8 +11,6 @@ import { applyMiddleware } from 'redux';
 import { default as thunk } from 'redux-thunk'
 import { reduce } from './reducers'
 
-const logo = require('./logo.svg');
-
 const Details = connect(x => x, actions.generateDetailsSideEffects)(_Details);
 const Summary = connect(x => x, actions.generateSummarySideEffects)(_Summary);
 
@@ -54,10 +52,6 @@ class App extends React.Component {
     return (
       <Provider store={this.store}>
         <div className="App">
-          <div className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h2>Welcome to React</h2>
-          </div>
           <div className="App-intro">
             {generateBody(this.state)}
           </div>

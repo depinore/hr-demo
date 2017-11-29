@@ -17,3 +17,31 @@ export function getBookends<T>(arr: T[], index: number): { before: T[], after: T
         after: arr.slice(index + 1)
     }
 }
+
+const getCost = (isEmployee: boolean) =>
+    isEmployee ? 1000 : 500;
+
+export function toLineItem(firstName: string, appliesTo: 'employee' | number): types.LineItem {
+    const isEligibleForDiscount = /^a/i.test(firstName)
+    const amount = getCost(appliesTo === 'employee')
+
+    return {
+        amount: isEligibleForDiscount ? amount * .9 : amount,
+        discounted: isEligibleForDiscount,
+        appliesTo: appliesTo
+    }
+}
+
+export function toCostAnalysis(employeeFirstName: string, dependentFirstNames: string[]): types.CostAnalysis {
+    const items: types.LineItem[] = [
+        toLineItem(employeeFirstName, 'employee'),
+        ...dependentFirstNames.map(toLineItem)
+    ]
+
+    return {
+        items: items,
+        totalCost: items
+                    .map(i => i.amount)
+                    .reduce((sum, current) => sum + current, 0)
+    }
+}
